@@ -1,5 +1,4 @@
 import React from 'react';
-import { StatusBar } from 'expo-status-bar';
 import { View, Text, StyleSheet } from 'react-native';
 import { ImageCarousel } from './ImageCarousel';
 
@@ -9,7 +8,7 @@ export default HomeScreen = () => {
     <View style={styles.container}>
       <Text>This is a home screen</Text>
 
-      <StatusBar style="auto" />
+      <ImageCarousel/>
     </View>
   );
 };
