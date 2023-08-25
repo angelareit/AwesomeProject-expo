@@ -7,20 +7,14 @@ import axios from 'axios';
 
 
 interface CarouselItem {
-  index: string,
   title: string,
   imageURL: string,
 }
 
 export const ImageCarousel: React.FC = () => {
-  const [activeIndex, setActiveIndex] = useState<number>(0);
   const width = Dimensions.get('window').width;
   const height = Dimensions.get('window').height;
-
-  const [pagingEnabled, setPagingEnabled] = React.useState<boolean>(true);
-  const [snapEnabled, setSnapEnabled] = React.useState<boolean>(true);
   const progressValue = useSharedValue<number>(0);
-
   const [dogData, setDogData] = useState<string[]>([]);
 
   const fetchDogData = async () => {
@@ -28,7 +22,7 @@ export const ImageCarousel: React.FC = () => {
       const response = await axios.get(
         'https://api.thedogapi.com/v1/images/search?limit=8&has_breeds=1&api_key=live_dvuDs5mJzRl2d72HBHYxl93k1Pzdjv5qn6ubU5ZgG2VTDsreMBPhYiy4TClJffJQ'
       );
-      console.log('response', response.data)
+      console.log('response', response.data);
       return response.data;
     } catch (error) {
       console.error('Error fetching dog images:', error);
@@ -42,14 +36,13 @@ export const ImageCarousel: React.FC = () => {
   }, []);
 
   const carouselItems: CarouselItem[] = dogData.map((result: any, index) => ({
-    index: `Item ${index + 1}`,
     title: result.breeds[0]?.name,
     imageURL: result.url,
   }));
 
   const styles = StyleSheet.create({
     container: {
-      //      backgroundColor: 'pink',
+      // backgroundColor: 'pink',
     },
     carouselCard: {
       backgroundColor: 'rgba(224, 224, 224, 0.65)',
@@ -72,7 +65,6 @@ export const ImageCarousel: React.FC = () => {
     imageContainer: {
       flex: 1,
       width: '100%',
-  
       //paddingHorizontal: 20,
       backgroundColor: 'rgba(0, 0, 0, 0.2)'
     },
@@ -82,7 +74,7 @@ export const ImageCarousel: React.FC = () => {
       resizeMode: 'contain',
     },
     infoContainer: {
-      //backgroundColor: 'rgba(108, 19, 111, 0.5)',
+     // backgroundColor: 'rgba(108, 19, 111, 0.5)',
       justifyContent: 'center',
       marginTop:15,
       alignItems: 'center',
@@ -101,7 +93,7 @@ export const ImageCarousel: React.FC = () => {
     }
   });
 
-  const renderItem = ({ item, index }: { item: CarouselItem; index: number }) => (
+  const renderCarouselItems = ({ item, index }: { item: CarouselItem; index: number }) => (
     <View style={styles.carouselCard}>
       <View style={styles.imageContainer}>
         <Image source={{ uri: item.imageURL }} style={styles.image} />
@@ -123,7 +115,7 @@ export const ImageCarousel: React.FC = () => {
           width={width}
           data={carouselItems}
           onSnapToItem={(index) => console.log('current index:', index)}
-          renderItem={renderItem}
+          renderItem={renderCarouselItems}
           onProgressChange={(_, absoluteProgress) =>
             (progressValue.value = absoluteProgress)
           }

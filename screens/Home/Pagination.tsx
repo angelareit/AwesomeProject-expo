@@ -4,7 +4,6 @@ import Animated, {
   Extrapolate,
   interpolate,
   useAnimatedStyle,
-  useSharedValue,
 } from "react-native-reanimated";
 
 export const Pagination: React.FC<{
@@ -14,7 +13,7 @@ export const Pagination: React.FC<{
   isRotate?: boolean
 }> = (props) => {
   const { animValue, index, length, isRotate } = props;
-  const height = 10; // Change to height value
+  const height = 10;
 
   const animStyle = useAnimatedStyle(() => {
     let inputRange = [index - 1, index, index + 1];
@@ -42,7 +41,7 @@ export const Pagination: React.FC<{
   return (
     <View
       style={{
-        backgroundColor: 'rgba(128, 128, 128, 0.4)', // Gray with 80% opacity
+        backgroundColor: 'rgba(53, 113, 101, 0.25)',
         width: height, 
         height,
         borderRadius: 50,
@@ -60,7 +59,7 @@ export const Pagination: React.FC<{
         style={[
           {
             borderRadius: 50,
-            backgroundColor: 'gray',
+            backgroundColor: 'rgba(66, 160, 141, 0.85)',
             flex: 1,
           },
           animStyle,
