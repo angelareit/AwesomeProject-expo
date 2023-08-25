@@ -6,16 +6,14 @@ export default HomeScreen = () => {
 
   return (
     <View style={styles.container}>
-      <Text>This is a home screen</Text>
-
       <ImageCarousel/>
     </View>
   );
 };
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
     backgroundColor: '#fff',
+    flex:1,
     alignItems: 'center',
     justifyContent: 'center',
   },

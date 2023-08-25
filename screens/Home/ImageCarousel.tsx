@@ -2,8 +2,7 @@ import React, { useState, useRef } from 'react';
 import { View, Text, Dimensions, StyleSheet } from 'react-native';
 import Carousel from 'react-native-reanimated-carousel';
 import Pagination from './Pagination'
-
-import Animated, { useSharedValue } from "react-native-reanimated";
+import { useSharedValue } from "react-native-reanimated";
 
 
 interface CarouselItem {
@@ -14,8 +13,8 @@ interface CarouselItem {
 export const ImageCarousel: React.FC = () => {
   const [activeIndex, setActiveIndex] = useState<number>(0);
   const width = Dimensions.get('window').width;
-  const [isVertical, setIsVertical] = React.useState(false);
-  const [autoPlay, setAutoPlay] = React.useState(false);
+  const height = Dimensions.get('window').height;
+
   const [pagingEnabled, setPagingEnabled] = React.useState<boolean>(true);
   const [snapEnabled, setSnapEnabled] = React.useState<boolean>(true);
   const progressValue = useSharedValue<number>(0);
@@ -44,73 +43,71 @@ export const ImageCarousel: React.FC = () => {
     },
   ];
 
+  const styles = StyleSheet.create({
+    container: {
+      //backgroundColor: 'pink',
+    },
+    carouselCard: {
+      backgroundColor: 'tomato',
+      borderRadius: 10,
+      justifyContent: 'center',
+      alignItems: 'center',
+      flex:1,
+      marginHorizontal: 25
+    },
+    carouselContainer: {
+      height: height / 2 + 80,
+    },
+    pagination: {
+      //backgroundColor: 'aqua',
+      flexDirection: "row",
+      margin: 10,
+      justifyContent: "center",
+    }
+  });
 
   const renderItem = ({ item, index }: { item: CarouselItem; index: number }) => (
     <View style={styles.carouselCard}>
-      <Text style={{ fontSize: 30 }}>{item.title}</Text>
-      <Text>Hello There</Text>
-
-      <Text>{item.text}</Text>
+      <Text style={{ fontSize: 20 }}>{item.title}</Text>
+      <Text style={{ textAlign: 'center', fontSize: 20 }}>
+        {carouselItems[index].text}
+      </Text>
+      <Text style={{ textAlign: 'center', fontSize: 20 }}>
+        {index}
+      </Text>
     </View>
   );
 
-  const onSnapToItem = (index: number) => {
-    setActiveIndex(index);
-  };
-
   return (
     <View style={styles.container}>
-      <Carousel
-        loop
-        width={width}
-        height={width / 2}
-        data={carouselItems}
-        onSnapToItem={(index) => console.log('current index:', index)}
-        renderItem={({ index }) => (
-          <View
-            style={{
-              flex: 1,
-              borderWidth: 1,
-              backgroundColor: 'pink',
-              justifyContent: 'center',
-            }}
-          >
-            <Text style={{ textAlign: 'center', fontSize: 30 }}>
-              {carouselItems[index].text}
-            </Text>
-          </View>
-        )}
-      />
-
-      {carouselItems.map((backgroundColor, index) => {
-        return (
-          <Pagination
-            animValue={progressValue}
-            index={index}
-            key={index}
-            isRotate={isVertical}
-            length={carouselItems.length}
-          />
-        );
-      })}
+      <View style={styles.carouselContainer}>
+        <Carousel
+          loop
+          width={width}
+          data={carouselItems}
+          onSnapToItem={(index) => console.log('current index:', index)}
+          renderItem={renderItem}
+          onProgressChange={(_, absoluteProgress) =>
+            (progressValue.value = absoluteProgress)
+          }
+        />
+      </View>
+      <View style={styles.pagination}>
+        {carouselItems.map((backgroundColor, index) => {
+          return (
+            <Pagination
+              animValue={progressValue}
+              index={index}
+              key={index}
+              isRotate={true}
+              length={carouselItems.length}
+            />
+          );
+        })}
+      </View>
     </View>
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    alignItems: 'center',
-  },
-  carouselCard: {
-    backgroundColor: 'tomato',
-    borderRadius: 5,
-    height: 250,
-    padding: 50,
-    marginLeft: 25,
-    marginRight: 25,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-});
 
 export default ImageCarousel;

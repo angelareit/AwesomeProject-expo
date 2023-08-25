@@ -14,21 +14,21 @@ export const Pagination: React.FC<{
   isRotate?: boolean
 }> = (props) => {
   const { animValue, index, length, isRotate } = props;
-  const width = 10;
+  const height = 10; // Change to height value
 
   const animStyle = useAnimatedStyle(() => {
     let inputRange = [index - 1, index, index + 1];
-    let outputRange = [-width, 0, width];
+    let outputRange = [-height, 0, height];
 
     if (index === 0 && animValue?.value > length - 1) {
       inputRange = [length - 1, length, length + 1];
-      outputRange = [-width, 0, width];
+      outputRange = [-height, 0, height];
     }
 
     return {
       transform: [
         {
-          translateX: interpolate(
+          translateY: interpolate(
             animValue?.value,
             inputRange,
             outputRange,
@@ -38,14 +38,17 @@ export const Pagination: React.FC<{
       ],
     };
   }, [animValue, index, length]);
+  
   return (
     <View
       style={{
-        backgroundColor: "white",
-        width,
-        height: width,
+        backgroundColor: 'rgba(128, 128, 128, 0.4)', // Gray with 80% opacity
+        width: height, 
+        height,
         borderRadius: 50,
+        flexDirection: "row",
         overflow: "hidden",
+        margin: 3,
         transform: [
           {
             rotateZ: isRotate ? "90deg" : "0deg",
@@ -57,7 +60,7 @@ export const Pagination: React.FC<{
         style={[
           {
             borderRadius: 50,
-            backgroundColor: 'red',
+            backgroundColor: 'gray',
             flex: 1,
           },
           animStyle,
