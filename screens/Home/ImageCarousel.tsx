@@ -10,10 +10,6 @@ interface CarouselItem {
   index: string,
   title: string,
   imageURL: string,
-  /*
-  temperment: string,
-  height: string,
-  weight: string,   */
 }
 
 export const ImageCarousel: React.FC = () => {
@@ -53,32 +49,32 @@ export const ImageCarousel: React.FC = () => {
 
   const styles = StyleSheet.create({
     container: {
-      //backgroundColor: 'pink',
+      //      backgroundColor: 'pink',
     },
     carouselCard: {
-      backgroundColor: 'rgba(224, 224, 224, 0.5)',
-      shadowColor: 'rgba(0, 224, 224, 0.5)',
+      backgroundColor: 'rgba(224, 224, 224, 0.65)',
+      shadowColor: 'rgba(0, 224, 224, 0.4)',
       borderRadius: 10,
       elevation: 10,
       shadowOffset: {
-        width: 15,
+        width: 10,
         height: 10,
       },
-      shadowOpacity: 0.8,
+      shadowOpacity: 0.5,
       shadowRadius: 3.84,
       justifyContent: 'center',
       alignItems: 'center',
-      margin:50,
+      marginBottom: 15,
       flex: 1,
+      padding:15,
       marginHorizontal: 25
     },
     imageContainer: {
-      flex: 4,
+      flex: 1,
       width: '100%',
-      borderTopLeftRadius: 5,
-      borderTopRightRadius:5,
-      paddingVertical:20,
-      //backgroundColor: 'rgba(140, 167, 239, 0.5)'
+  
+      //paddingHorizontal: 20,
+      backgroundColor: 'rgba(0, 0, 0, 0.2)'
     },
     image: {
       width: '100%',
@@ -86,20 +82,19 @@ export const ImageCarousel: React.FC = () => {
       resizeMode: 'contain',
     },
     infoContainer: {
-      flex: 1,
-      backgroundColor: 'rgba(108, 19, 111, 0.5)',
+      //backgroundColor: 'rgba(108, 19, 111, 0.5)',
       justifyContent: 'center',
+      marginTop:15,
       alignItems: 'center',
     },
     info: {
-
+      textAlign: 'center',
+      fontSize: 20, 
     },
-
     carouselContainer: {
-      height: height / 2 + 80,
+      height: height / 2,
     },
     pagination: {
-      //backgroundColor: 'aqua',
       flexDirection: "row",
       margin: 10,
       justifyContent: "center",
@@ -112,11 +107,8 @@ export const ImageCarousel: React.FC = () => {
         <Image source={{ uri: item.imageURL }} style={styles.image} />
       </View>
       <View style={styles.infoContainer}>
-        <Text style={{ textAlign: 'center', fontSize: 20 }}>
+        <Text style={styles.info}>
           {item.title}
-        </Text>
-        <Text style={{ textAlign: 'center', fontSize: 5 }}>
-          {index}
         </Text>
       </View>
 
